@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="Trade" mode="tab" title="TRADE">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="TradeTable" 
+            service="Trade" 
+            entity="Trade" 
+            title="TRADE"
+            keys="id"
+            columns="id;kingdom_a_id;kingdom_b_id;goods" 
+            header-actions="R;D"
+            visible-columns="id;kingdom_a_id;kingdom_b_id;goods"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="kingdom_a_id" title="kingdom_a_id">
+    <o-table-cell-renderer-service attr="kingdom_a_id" 
+        service="Kingdom" entity="KingdomType" columns="id;name"
+        parent-keys="id:kingdom_a_id"
+        value-column="name" keys="kingdom_a_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="kingdom_b_id" title="kingdom_b_id">
+    <o-table-cell-renderer-service attr="kingdom_b_id" 
+        service="Kingdom" entity="KingdomType" columns="id;name"
+        parent-keys="id:kingdom_b_id"
+        value-column="name" keys="kingdom_b_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #goods attr="goods" title="goods" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

@@ -1,0 +1,115 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+// Or, view in VSCode with extension: "DBML Live Preview"
+
+Project DBML {
+  Note: '''
+Advisor: Represents an advisor to a king.
+King: Represents a king who rules over a kingdom.
+Battle: Represents a battle event involving knights and kingdoms.
+Castle: Represents a castle within a kingdom.
+Kingdom: Represents a kingdom in the medieval realm.
+Knight: Represents a knight serving a kingdom.
+KnightBattleParticipation: Link table associating knights with battles they participated in.
+Peasant: Represents a common person living in a kingdom.
+Queen: Represents a queen associated with a king.
+Resource: Represents a natural or economic resource available in a kingdom.
+Trade: Represents trade agreements or activities between kingdoms.
+Village: Represents a village within a kingdom.
+'''
+}
+
+Table Advisor {
+    id INTEGER [primary key]
+    name VARCHAR 
+    expertise VARCHAR 
+    king_id INTEGER 
+    }
+
+Table King {
+    id INTEGER [primary key]
+    name VARCHAR 
+    reign_start_date VARCHAR 
+    }
+
+Table Battle {
+    id INTEGER [primary key]
+    name VARCHAR 
+    date VARCHAR 
+    location VARCHAR 
+    }
+
+Table Castle {
+    id INTEGER [primary key]
+    name VARCHAR 
+    kingdom_id INTEGER 
+    }
+
+Table Kingdom {
+    id INTEGER [primary key]
+    name VARCHAR 
+    ruler_id INTEGER 
+    }
+
+Table Knight {
+    id INTEGER [primary key]
+    name VARCHAR 
+    title VARCHAR 
+    kingdom_id INTEGER 
+    }
+
+Table KnightBattleParticipation {
+    id INTEGER [primary key]
+    knight_id INTEGER 
+    battle_id INTEGER 
+    }
+
+Table Peasant {
+    id INTEGER [primary key]
+    name VARCHAR 
+    occupation VARCHAR 
+    kingdom_id INTEGER 
+    }
+
+Table Queen {
+    id INTEGER [primary key]
+    name VARCHAR 
+    king_id INTEGER 
+    }
+
+Table Resource {
+    id INTEGER [primary key]
+    name VARCHAR 
+    quantity FLOAT 
+    kingdom_id INTEGER 
+    }
+
+Table Trade {
+    id INTEGER [primary key]
+    kingdom_a_id INTEGER 
+    kingdom_b_id INTEGER 
+    goods VARCHAR 
+    }
+
+Table Village {
+    id INTEGER [primary key]
+    name VARCHAR 
+    population INTEGER 
+    kingdom_id INTEGER 
+    }
+
+
+
+// Relationships
+    Ref: Advisor.(king_id) < King.(id)
+    Ref: Castle.(kingdom_id) < Kingdom.(id)
+    Ref: Kingdom.(ruler_id) < King.(id)
+    Ref: Knight.(kingdom_id) < Kingdom.(id)
+    Ref: KnightBattleParticipation.(battle_id) < Battle.(id)
+    Ref: KnightBattleParticipation.(knight_id) < Knight.(id)
+    Ref: Peasant.(kingdom_id) < Kingdom.(id)
+    Ref: Queen.(king_id) < King.(id)
+    Ref: Resource.(kingdom_id) < Kingdom.(id)
+    Ref: Trade.(kingdom_a_id) < Kingdom.(id)
+    Ref: Trade.(kingdom_b_id) < Kingdom.(id)
+    Ref: Village.(kingdom_id) < Kingdom.(id)

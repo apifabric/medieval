@@ -1,0 +1,519 @@
+about:
+  date: October 28, 2024 18:48:50
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Advisor:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: king_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: expertise
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents an advisor to a king.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents an advisor to a king.
+    label: Advisor
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - king_id
+      name: king
+      resource: King
+    type: Advisor
+  Battle:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: date
+      template: text
+      type: VARCHAR
+    - name: location
+      required: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a battle event involving knights and kingdoms.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a battle event involving knights and kingdoms.
+    label: Battle
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - battle_id
+      name: KnightBattleParticipationList
+      resource: KnightBattleParticipation
+    type: Battle
+  Castle:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: kingdom_id
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a castle within a kingdom.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a castle within a kingdom.
+    label: Castle
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - kingdom_id
+      name: kingdom
+      resource: Kingdom
+    type: Castle
+  King:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: reign_start_date
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a king who rules over a kingdom.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a king who rules over a kingdom.
+    label: King
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - king_id
+      name: AdvisorList
+      resource: Advisor
+    - direction: tomany
+      fks:
+      - ruler_id
+      name: KingdomList
+      resource: Kingdom
+    - direction: tomany
+      fks:
+      - king_id
+      name: QueenList
+      resource: Queen
+    type: King
+  Kingdom:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: ruler_id
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a kingdom in the medieval realm.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a kingdom in the medieval realm.
+    label: Kingdom
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - kingdom_id
+      name: CastleList
+      resource: Castle
+    - direction: tomany
+      fks:
+      - kingdom_id
+      name: KnightList
+      resource: Knight
+    - direction: tomany
+      fks:
+      - kingdom_id
+      name: PeasantList
+      resource: Peasant
+    - direction: tomany
+      fks:
+      - kingdom_id
+      name: ResourceList
+      resource: Resource
+    - direction: tomany
+      fks:
+      - kingdom_a_id
+      name: TradeList
+      resource: Trade
+    - direction: tomany
+      fks:
+      - kingdom_b_id
+      name: kingdom_bTradeList
+      resource: Trade
+    - direction: tomany
+      fks:
+      - kingdom_id
+      name: VillageList
+      resource: Village
+    - direction: toone
+      fks:
+      - ruler_id
+      name: ruler
+      resource: King
+    type: Kingdom
+  Knight:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: kingdom_id
+      template: integer
+      type: INTEGER
+    - name: title
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a knight serving a kingdom.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a knight serving a kingdom.
+    label: Knight
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - knight_id
+      name: KnightBattleParticipationList
+      resource: KnightBattleParticipation
+    - direction: toone
+      fks:
+      - kingdom_id
+      name: kingdom
+      resource: Kingdom
+    type: Knight
+  KnightBattleParticipation:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: battle_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: knight_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Link table associating knights with battles they participated in.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Link table associating knights with battles they participated in.
+    label: KnightBattleParticipation
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - battle_id
+      name: battle
+      resource: Battle
+    - direction: toone
+      fks:
+      - knight_id
+      name: knight
+      resource: Knight
+    type: KnightBattleParticipation
+  Peasant:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: kingdom_id
+      template: integer
+      type: INTEGER
+    - name: occupation
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a common person living in a kingdom.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a common person living in a kingdom.
+    label: Peasant
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - kingdom_id
+      name: kingdom
+      resource: Kingdom
+    type: Peasant
+  Queen:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: king_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a queen associated with a king.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a queen associated with a king.
+    label: Queen
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - king_id
+      name: king
+      resource: King
+    type: Queen
+  Resource:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: kingdom_id
+      template: integer
+      type: INTEGER
+    - name: quantity
+      template: real
+      type: FLOAT
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a natural or economic resource available in a kingdom.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a natural or economic resource available in a kingdom.
+    label: Resource
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - kingdom_id
+      name: kingdom
+      resource: Kingdom
+    type: Resource
+  Trade:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: kingdom_a_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: kingdom_b_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: goods
+      required: true
+      template: text
+      type: VARCHAR
+    description: Represents trade agreements or activities between kingdoms.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents trade agreements or activities between kingdoms.
+    label: Trade
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - kingdom_a_id
+      name: kingdom_a
+      resource: Kingdom
+    - direction: toone
+      fks:
+      - kingdom_b_id
+      name: kingdom_b
+      resource: Kingdom
+    type: Trade
+  Village:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: kingdom_id
+      template: integer
+      type: INTEGER
+    - name: population
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a village within a kingdom.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a village within a kingdom.
+    label: Village
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - kingdom_id
+      name: kingdom
+      resource: Kingdom
+    type: Village
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

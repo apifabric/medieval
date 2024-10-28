@@ -1,0 +1,343 @@
+about:
+  date: October 28, 2024 18:48:50
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 12
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Advisor:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: king_id
+      required: true
+    - name: expertise
+    - name: id
+    description: Represents an advisor to a king.
+    info_list: Represents an advisor to a king.
+    tab_groups:
+    - direction: toone
+      fks:
+      - king_id
+      name: king
+      resource: King
+    type: Advisor
+    user_key: name
+  Battle:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: date
+    - name: location
+      required: true
+    - name: id
+    description: Represents a battle event involving knights and kingdoms.
+    info_list: Represents a battle event involving knights and kingdoms.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - battle_id
+      name: KnightBattleParticipationList
+      resource: KnightBattleParticipation
+    type: Battle
+    user_key: name
+  Castle:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: kingdom_id
+    - name: id
+    description: Represents a castle within a kingdom.
+    info_list: Represents a castle within a kingdom.
+    tab_groups:
+    - direction: toone
+      fks:
+      - kingdom_id
+      name: kingdom
+      resource: Kingdom
+    type: Castle
+    user_key: name
+  King:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: reign_start_date
+    - name: id
+    description: Represents a king who rules over a kingdom.
+    info_list: Represents a king who rules over a kingdom.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - king_id
+      name: AdvisorList
+      resource: Advisor
+    - direction: tomany
+      fks:
+      - ruler_id
+      name: KingdomList
+      resource: Kingdom
+    - direction: tomany
+      fks:
+      - king_id
+      name: QueenList
+      resource: Queen
+    type: King
+    user_key: name
+  Kingdom:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: ruler_id
+    - name: id
+    description: Represents a kingdom in the medieval realm.
+    info_list: Represents a kingdom in the medieval realm.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - kingdom_id
+      name: CastleList
+      resource: Castle
+    - direction: tomany
+      fks:
+      - kingdom_id
+      name: KnightList
+      resource: Knight
+    - direction: tomany
+      fks:
+      - kingdom_id
+      name: PeasantList
+      resource: Peasant
+    - direction: tomany
+      fks:
+      - kingdom_id
+      name: ResourceList
+      resource: Resource
+    - direction: tomany
+      fks:
+      - kingdom_a_id
+      name: TradeList
+      resource: Trade
+    - direction: tomany
+      fks:
+      - kingdom_b_id
+      name: kingdom_bTradeList
+      resource: Trade
+    - direction: tomany
+      fks:
+      - kingdom_id
+      name: VillageList
+      resource: Village
+    - direction: toone
+      fks:
+      - ruler_id
+      name: ruler
+      resource: King
+    type: Kingdom
+    user_key: name
+  Knight:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: kingdom_id
+    - name: title
+    - name: id
+    description: Represents a knight serving a kingdom.
+    info_list: Represents a knight serving a kingdom.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - knight_id
+      name: KnightBattleParticipationList
+      resource: KnightBattleParticipation
+    - direction: toone
+      fks:
+      - kingdom_id
+      name: kingdom
+      resource: Kingdom
+    type: Knight
+    user_key: name
+  KnightBattleParticipation:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: battle_id
+      required: true
+    - name: knight_id
+      required: true
+    description: Link table associating knights with battles they participated in.
+    info_list: Link table associating knights with battles they participated in.
+    tab_groups:
+    - direction: toone
+      fks:
+      - battle_id
+      name: battle
+      resource: Battle
+    - direction: toone
+      fks:
+      - knight_id
+      name: knight
+      resource: Knight
+    type: KnightBattleParticipation
+    user_key: id
+  Peasant:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: kingdom_id
+    - name: occupation
+    - name: id
+    description: Represents a common person living in a kingdom.
+    info_list: Represents a common person living in a kingdom.
+    tab_groups:
+    - direction: toone
+      fks:
+      - kingdom_id
+      name: kingdom
+      resource: Kingdom
+    type: Peasant
+    user_key: name
+  Queen:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: king_id
+      required: true
+    - name: id
+    description: Represents a queen associated with a king.
+    info_list: Represents a queen associated with a king.
+    tab_groups:
+    - direction: toone
+      fks:
+      - king_id
+      name: king
+      resource: King
+    type: Queen
+    user_key: name
+  Resource:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: kingdom_id
+    - name: quantity
+    - name: id
+    description: Represents a natural or economic resource available in a kingdom.
+    info_list: Represents a natural or economic resource available in a kingdom.
+    tab_groups:
+    - direction: toone
+      fks:
+      - kingdom_id
+      name: kingdom
+      resource: Kingdom
+    type: Resource
+    user_key: name
+  Trade:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: kingdom_a_id
+      required: true
+    - name: kingdom_b_id
+      required: true
+    - name: goods
+      required: true
+    description: Represents trade agreements or activities between kingdoms.
+    info_list: Represents trade agreements or activities between kingdoms.
+    tab_groups:
+    - direction: toone
+      fks:
+      - kingdom_a_id
+      name: kingdom_a
+      resource: Kingdom
+    - direction: toone
+      fks:
+      - kingdom_b_id
+      name: kingdom_b
+      resource: Kingdom
+    type: Trade
+    user_key: id
+  Village:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: kingdom_id
+    - name: population
+    - name: id
+    description: Represents a village within a kingdom.
+    info_list: Represents a village within a kingdom.
+    tab_groups:
+    - direction: toone
+      fks:
+      - kingdom_id
+      name: kingdom
+      resource: Kingdom
+    type: Village
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'
